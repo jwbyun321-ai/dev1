@@ -156,7 +156,7 @@ async function initialize() {
   if(!config.supabaseUrl && !config.supabasePublishableKey){mode='local';updateStorageUI();await loadRecords();return;}
   try{
     if(!/^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/.test(config.supabaseUrl)||!config.supabasePublishableKey||config.supabasePublishableKey.startsWith('sb_secret_'))throw new Error('공개 프로젝트 URL과 publishable key 설정을 확인해 주세요.');
-    await new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';script.onload=resolve;script.onerror=()=>reject(new Error('로그인 모듈을 불러오지 못했습니다.'));document.head.append(script);});
+    await new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.js';script.onload=resolve;script.onerror=()=>reject(new Error('로그인 모듈을 불러오지 못했습니다.'));document.head.append(script);});
     client=window.supabase.createClient(config.supabaseUrl,config.supabasePublishableKey);
     const {data,error}=await client.auth.getSession();if(error)throw error;
     user=data.session?.user || null;mode='cloud';updateStorageUI();
